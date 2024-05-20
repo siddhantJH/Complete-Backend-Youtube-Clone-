@@ -51,5 +51,7 @@ now we nee to add some files . prettierrc : it keeps the configuration of the pr
                             . prettierIgnore: it ignores the files on which we dont need to implement the prettier 
                             
 
+next we need to add dependenies for production as well
 
-next we need to add dependenies for production 
+
+//now we will be commecting the database connection to our code 
