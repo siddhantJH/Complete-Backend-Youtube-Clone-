@@ -1,0 +1,35 @@
+now we are done with iniltilizing npm i 
+we have setup our github repository and pushed the readme and package.json as well 
+now we know that we need to store the images correspoding to each user for that we will need the cloud storage third party(AWS)
+first we upload the photos from the user we store it temperority on the server in case of connetion safety 
+then we store it into cloudnary, first make folders 
+->public--->temp // but it is empty so it can't be pushed on the github so this is a sort of problem 
+->so we create a new file inside wo we create a .gitkeep file now it can be pushed 
+->next we need to make a git ignore file (it decides what we don't need to push into the github) //go to gitigbnore generator for node npm 
+->next make .env file now jab bhi nham chizo ko production me push karenge then we need to keep certain things secret and controversial (ye system se uthae jate hai code se nai )
+->make another folder called as src inside it make three file  app.js, constant.js , index.js
+->now we need to make some folders inside src as well not now so we need push it in the git as well 
+->for now lets make some changes int the package.json like script and module type updation 
+//means we are goin to use the import 
+
+now from the past we know that whenever we made any changes into the code of the server we had to start and stop it 
+in order to solve that we will use nodemon what it does that as soon as file saves it restarts the server that is it's only job 
+
+
+//when you go there you will see two things 
+Dependency:This is the dependency which we generally use during the production 
+
+
+Dev dependency: It is dependency which we use during development and not during production , This is usualy get installed during nodemon 
+                npm i nodemon this becomes main 
+                npm install --save-dev nodemon this install dev dependency and doe snot go into production 
+
+                npm i -D nodemon //it installs the developer dependency , we can see the package.json me dev dependency aa jaega and node modules ka folder bhi , to ye scripts jo src ke ander hai usko re run kar dega lekin hame batan padega to scripts me hame dev karke likh na padega ki kin chizo ko re execute karna hai ,
+
+
+deotenv problem: but there is still some problem in the dotenv after ustinh the type moduel in package we still have to use the 
+                require() syntax incase of the dotenv and we won't be able to use the 
+
+
+
+
