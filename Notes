@@ -28,8 +28,18 @@ Dev dependency: It is dependency which we use during development and not during 
 
 
 deotenv problem: but there is still some problem in the dotenv after ustinh the type moduel in package we still have to use the 
-                require() syntax incase of the dotenv and we won't be able to use the 
+                require() syntax incase of the dotenv and we won't be able to use the import 
+
+now we also need to add some folder inside the source, this is how we srtup the structure of proper produciion 
+grade project
 
 
+folders needed in src
+1) controller folders which keeps the logic
+2) db : how to connect the database connection logic 
+3) middlewares : any code which runs in between is doen using this middleware , aapke pas request aai vo server full fill kare usse pehele mai middle ware laga dunga , like cookie do etc
+4) models 
+5) routes: we will keeps the routes here , becuase routes kafi complex 
+6) utils : here we keeps the ulitity ka , here file uploading , email sending , tokens taking , all the things which is repeated we do this 
 
 
