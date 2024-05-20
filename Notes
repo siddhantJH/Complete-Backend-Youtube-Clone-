@@ -43,3 +43,13 @@ folders needed in src
 6) utils : here we keeps the ulitity ka , here file uploading , email sending , tokens taking , all the things which is repeated we do this 
 
 
+//add a prettier it is better, because when we write production grade code so when we merge we might get a lot 
+//of conficts so we use prettier settigs per project basics  npm i -D prettier 
+
+
+now we nee to add some files . prettierrc : it keeps the configuration of the prettier 
+                            . prettierIgnore: it ignores the files on which we dont need to implement the prettier 
+                            
+
+
+next we need to add dependenies for production 
