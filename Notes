@@ -1,3 +1,107 @@
+# Backend has two major component :-
+
+1)A Javascript programmign language (Java , Js, php, golang, C++)
+    language ke sath aik frame work use karna padega 
+
+
+
+
+2)A Database(Mongo , My SQL , Postgres, sqlite)
+    orm or odm will be used 
+
+
+
+
+        Here we have frontend which sends the data to backed  <-------->  API   <-----> here we have backend code written once but can be <----> DB
+                                                                                    deoployd in multiple computers, and 
+                                                                                    backend is connected to db                               
+
+
+
+
+#We write backend in the server now suppose you visit url which is detected by framework now which function to call 
+#is done by framewrk and data is send using the API, so yaha tak ka kam is for backend, express and mongoos which is done using routing.
+
+
+# javascript based backend 
+  ->data 
+  ->file 
+  ->third party api 
+  ->these three scenarios are there 
+
+
+# runtine 
+now there could be various runtime in javascript now adays  nodejs, reno, bun etc 
+
+
+
+# structure of directory 
+package.json
+.env (databse url and password are stored here)
+(readme, git , lint, prettier etc)
+
+
+
+
+index(used to connect Database)        App.js(config cookie url code)        constants(enums DB-name, keeps enums of repetitive things)   //these all are the files
+
+
+
+# Directory structure 
+->DB (Database diectory actual code of database is present here)
+->Models (Then we have models structure of how data is stored is shown here, like for mongoos it is diff , tells us what to store what to ask for )
+->controllers  (functionaly is stored here like function , which takes data and process it )
+->routes (on which url which function to call)
+->middleware ()
+->utils (These keeps the mailing function which are used repetedly)
+->More (depends)
+
+
+# HOW TO DEPLOY BACKEND
+  first and only major requrement is nodeJS ,  than type node -v which gives us the version of the node 
+  next we need npm which is node package manager which helps us install the packagfes
+
+
+
+# what does express do
+  computer ---------------------(req like get post) server (someone has to listen constantly /: home route /login route)
+          ----------------------(res) server (home route)
+
+
+# next we have get request 
+  ->create empty node application  (npm init) this is a utility which helps us to create package.json
+  write everthing than it makes us a package.json
+
+# how to run code using package.json 
+ -> we make a script command for this which says how to run the file using package.json so we use scripts command for it 
+ ->now if we type npm run start it will execute node index.js  helps us un server side 
+
+# Backend
+  ->next we need to learn express which is a web frame work (npm install express)
+  ->go to the website getting started-> helloworld
+  ->once we make any update in the server route we need to restart the app
+
+# enviorment variable
+  ->if we need to bring this app to production stage than we need to study about enviorment variable 
+  ->becuase there could be some difference in production enviorment and local enviorment 
+  -> so we need to study .env we
+  ->new file is needed .env
+  ->to use this write require('dotenv').config()
+
+# we could deploy the code in any free website 
+ -> render , aws , cyclic.sh , digital ocean 
+ -> all have the same process 
+ -> push everything in git 
+ ->initizlize git make .gitignore
+
+# once everything is done go to digitalOcean or anyother free backend hosting site like vercel 
+
+
+# Connect backend with the front
+->now where to put the source code of what we need to learn now create a folder and get inside of it and make two folders front end and backend.
+
+
+
 now we are done with iniltilizing npm i 
 we have setup our github repository and pushed the readme and package.json as well 
 now we know that we need to store the images correspoding to each user for that we will need the cloud storage third party(AWS)
@@ -27,10 +131,10 @@ Dev dependency: It is dependency which we use during development and not during 
                 npm i -D nodemon //it installs the developer dependency , we can see the package.json me dev dependency aa jaega and node modules ka folder bhi , to ye scripts jo src ke ander hai usko re run kar dega lekin hame batan padega to scripts me hame dev karke likh na padega ki kin chizo ko re execute karna hai ,
 
 
-deotenv problem: but there is still some problem in the dotenv after ustinh the type moduel in package we still have to use the 
+deotenv problem: but there is still some problem in the dotenv after using the type moduel in package we still have to use the
                 require() syntax incase of the dotenv and we won't be able to use the import 
 
-now we also need to add some folder inside the source, this is how we srtup the structure of proper produciion 
+now we also need to add some folder inside the source, this is how we startup the structure of proper produciion 
 grade project
 
 
@@ -38,12 +142,15 @@ folders needed in src
 1) controller folders which keeps the logic
 2) db : how to connect the database connection logic 
 3) middlewares : any code which runs in between is doen using this middleware , aapke pas request aai vo server full fill kare usse pehele mai middle ware laga dunga , like cookie do etc
-4) models 
-5) routes: we will keeps the routes here , becuase routes kafi complex 
+4) models  : we have already seen how to make models of the backend
+5) routes: we will keeps the routes here , because routes kafi complex ban jate hai as we go on building the project.
 6) utils : here we keeps the ulitity ka , here file uploading , email sending , tokens taking , all the things which is repeated we do this 
 
 
 //add a prettier it is better, because when we write production grade code so when we merge we might get a lot 
+
+
+
 //of conficts so we use prettier settigs per project basics  npm i -D prettier 
 
 
@@ -54,4 +161,36 @@ now we nee to add some files . prettierrc : it keeps the configuration of the pr
 next we need to add dependenies for production as well
 
 
-//now we will be commecting the database connection to our code 
+# now we will be connecting the database connection to our code.
+
+->now go to mongo db atlas , this is sub service which gives online shared database, can be upgraded for professional use
+->netx make a account and go to project page after making organisation and everything
+->make project
+->go to the quick start and then add the necessary credentials and enter the entry for ip access list
+    =>0.0.0.0/0 means anyone can connect to it
+->next choose the my local enviorment
+->finish and close
+->mongo db me atlas se access lene ke liye do chize honi chahiye aik id and pass , and url usuallly ip address
+ sirf aik machine ka address kiya jata hai jaha aapka code pada ho
+ ->if you have missed any of the part please go to security tab and select database access and then netweork access to make necessarychanges
+ ->in built in role of edit used in database access section shooe read and write database
+ ->next fo to database , for this we need string also along with idp , now when we click on connect
+ we will see varius ways to connect to db choose(all gives string) choose cumpus copy string
+
+
+
+# database 
+Go to env variable and put necessry stufs like where your application will run then mongo db utri
+if your pass contains special char then there migh be prob
+then go to src folder now we will see how to connect the database
+go to constants file write database name and export it
+
+
+
+type1) sara code  index file me rakh du aur  pura code turant execute karws du ,
+
+typ2)next approach is  db nam ka folder banao aur connection ka fu nction wha alikhu aur index file pe import karwa ke waha run karu ,
+    both have pros and cons if, type 2 is distributed and modular approach ,app banegi express ke throuh and db connectioon will be from mongoose ke through, download dot env, monoose ,express , Databae se jab bhi bat karne ki koshish karenge to problem aaegi ,
+    to try catch me wrap karo , databae is always in another continent(the details of code and how to connect is present int eh index.js of db and src)
+
+.env : as early as possible in your applocation, imprt and configure .end
