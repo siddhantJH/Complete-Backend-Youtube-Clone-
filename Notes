@@ -186,11 +186,13 @@ then go to src folder now we will see how to connect the database
 go to constants file write database name and export it
 
 
+Type1) sara code  index file me rakh du aur  pura code turant execute karwa du ,
 
-type1) sara code  index file me rakh du aur  pura code turant execute karws du ,
-
-typ2)next approach is  db nam ka folder banao aur connection ka fu nction wha alikhu aur index file pe import karwa ke waha run karu ,
+Type2)next approach is  db nam ka folder banao aur connection ka fu nction wha alikhu aur index file pe import karwa ke waha run karu ,
     both have pros and cons if, type 2 is distributed and modular approach ,app banegi express ke throuh and db connectioon will be from mongoose ke through, download dot env, monoose ,express , Databae se jab bhi bat karne ki koshish karenge to problem aaegi ,
-    to try catch me wrap karo , databae is always in another continent(the details of code and how to connect is present int eh index.js of db and src)
+    to try catch me wrap karo , databae is always in another continent(the details of code and how to connect is present int eh index.js of db and src).
 
-.env : as early as possible in your applocation, imprt and configure .end
+.env : as early as possible in your application, import .env
+
+
+# how to define classes for custom API and Custom Error
