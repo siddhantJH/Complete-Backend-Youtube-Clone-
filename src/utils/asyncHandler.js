@@ -20,12 +20,13 @@ const asyncHandler=(fn)=>async ()=>{
     try{
         await fn(req,res,next)   //jo function liya hai execute karo
     }catch(error){
-        res.status(err.code || 500).json({
-            success:false,
-            message:error.message
-        })
+        const statusCode = error.code || 500;
+        const errorResponse = new ApiError(statusCode, null, error.message);
+        res.status(statusCode).json(errorResponse);
     }
-}//how to maintain the error class and standarize the error message 
+}
+//how to maintain the error class and standarize the error message
+//so we need a class for ApiError and every error shoudl go through it
 
 
 //SECOND WAY(promise approach)

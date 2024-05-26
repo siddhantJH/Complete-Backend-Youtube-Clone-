@@ -25,7 +25,7 @@ connectDB()
 .catch((err)=>{
     console.log("Mongo DB connection failed!!!", err)
 })
-//when you try to run node run dev it will throw an error that we are not able to use src/db in import moduel
+//when you try to run node run dev it will throw an error that we are not able to use src/db in import module
 //we are importing it in this file itself ,first check import so we sometine need to use the extension, so we can see then mongo db connected
 //lets try to fail db, any changes in dnv need to restart hamne db jo file likhi hai hamn async
 //aur await ka use kiya hai to asynchronous methods aapko aik promise bhi return karta hai to resolve promise use .then ()
@@ -36,7 +36,8 @@ connectDB()
 /*
 ;(async ()=>{
     try {
-       await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)   //sometime we might see that just after db connection there is listener
+       await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)//sometime we might see that just
+        //after db connection there is listener
         app.on("error",()=>{//error event used to listne to errors using express app
             console.log("Err",error)
             throw error

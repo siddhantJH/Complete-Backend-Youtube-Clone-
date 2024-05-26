@@ -58,5 +58,4 @@ export default App  //we made the app and we exported it now in index we need to
                 //middle ware loginc could be of various types , login check, admin ho ya nai , there is seq to run the middleware
                 //(err,req,res,next) next means you are talking about middle ware this (err,req,res,next) is present in each middle ware
                 //har middle ware ka kam jab ho jaega to next karke next ko pass kar dega,this same box is called middleware
-                //next means ham middle ware ke bare me bat kar rahe hai to next flag pass hota hai, sab next use karega
-                
+                //next means ham middle ware ke bare me bat kar rahe hai to next flag pass hota hai, sab next use karega        
