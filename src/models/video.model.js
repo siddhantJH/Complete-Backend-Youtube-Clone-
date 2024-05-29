@@ -51,9 +51,3 @@ export const Video=mongoose.models('video',videoSchema)
 //for that we will use mongoose-aggregate : it allows us to write aggregation queries
 //first install PS C:\Users\SIDHANT\Desktop\youtubeClone> npm i mongoose-aggregate-paginate-v2
 //then import inside the schema
-
-
-//next install bcrypt js or bcrypt
-//npm i bcrypt
-//both has same work
-//it is a .ibrary which helps us to hash our password

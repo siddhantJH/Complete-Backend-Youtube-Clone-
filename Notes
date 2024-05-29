@@ -188,11 +188,20 @@ go to constants file write database name and export it
 
 Type1) sara code  index file me rakh du aur  pura code turant execute karwa du ,
 
-Type2)next approach is  db nam ka folder banao aur connection ka fu nction wha alikhu aur index file pe import karwa ke waha run karu ,
+Type2) next approach is  db nam ka folder banao aur connection ka fu nction wha alikhu aur index file pe import karwa ke waha run karu ,
     both have pros and cons if, type 2 is distributed and modular approach ,app banegi express ke throuh and db connectioon will be from mongoose ke through, download dot env, monoose ,express , Databae se jab bhi bat karne ki koshish karenge to problem aaegi ,
     to try catch me wrap karo , databae is always in another continent(the details of code and how to connect is present int eh index.js of db and src).
 
 .env : as early as possible in your application, import .env
 
 
-# how to define classes for custom API and Custom Error
+# how to define classes for custom API and Custom Error : done open the file and see
+
+
+# File Uploading
+this taks is usually done by backend engineers and aik bar hame file upload samjahe a agaya uske bad koi bhi upload ho aap sab samajh paenge,framework like express does not have a file handling facelility, it is not usually done by your own server,better to upload it in
+third party website.
+
+//har api endpoint me file nai aane wali, register me aa sakti hai login me kabhi nai aaegi
+//kyoki koi bhi image ke sath login nai karta hai,so better to make a seprate utility function for file
+//upload

@@ -41,7 +41,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:[true,'Password is required']
     },
-    refreshToken:{   //these are used to maintait the session
+    refreshToken:{   //these are used to maintain the session
         type:String,
         required:true
     }
@@ -73,23 +73,47 @@ userSchema.pre("save",async function(next){
 //mongoose gives us lots of methods , so we can make medthodsas well like middleware
 //how to make custom methods
 
+
+
+//next install bcrypt js or bcrypt
+//npm i bcrypt
+//both has same work
+//it is a .library which helps us to hash our password
 userSchema.methods.isPasswordCorrect = async function(password){
 return await bcrypt.compare(password,this) //used for comparison takes time so make ut await
 }
 
 
 userSchema.methods.generateAccessToken=function(){//JWT ke pass sign methods hai jo generate kar deta hai token
-
+    return jwt.sign({   //hamare pas already chize stored hai database me aur iske pass access hai this ka to ye db se utha lega
+        _id: this._id,
+        emial:this.email,
+        username:this.username,
+        fullName:this.fullName
+    },process.env.ACCESS_TOKEN_SECRET,{
+        expiresIn:ACCESS_TOKEN_EXPIRY
+    })
 }
-userSchema.methods.generateRefreshToken=function(){
+//so we have now stored this things into the database
 
+
+//has same implementation as that of the access token function but it has less details
+userSchema.methods.generateRefreshToken=function(){
+    return jwt.sign({   //hamare pas already chize stored hai database me aur iske pass access hai this ka to ye db se utha lega
+        _id: this._id,
+        emial:this.email,
+        username:this.username,
+        fullName:this.fullName
+    },process.env.ACCESS_TOKEN_SECRET,{
+        expiresIn:ACCESS_TOKEN_EXPIRY
+    })
 }
 
 //JWT is bearer token means: jo usko bear karta hai usko ham sahi man lete hai
 //means ye token jiske bhi pas hai mai isko data bhej dunga
 
 //next we need to install jwt (json web token)
-//it is based on crypto graphyu which makes token
+//it is based on cryptography which makes token
 //these tokens are usually encrypted
 //JWT.io it has three parts headers , next we have payload(data) , and then we have verification signature
 //JWT and bcrypt is needed in every project
