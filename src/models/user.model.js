@@ -50,7 +50,8 @@ const userSchema = new mongoose.Schema({
 
 
 //directly encrypting and storeing is quite hectic so we need to take help from mongoose hooks(hooks are function)
-//pre hook is a middle  ware  jaise hi data save hone ja raha hoga just usse pehele , ye hook run karwa sakte hai usse pehele save
+//pre hook is a middle  ware  jaise hi data save hone ja
+//raha hoga just usse pehele , ye hook run karwa sakte hai usse pehele save
 //hone se pehele
 //below is the way to run it
 
@@ -68,9 +69,9 @@ userSchema.pre("save",async function(next){
 
 
 //bcrypt does a lot of task behind the scene , now we will need to add  lot
-//of methods which will taki jab ha, user to import karway usse puch le password sahi hai li nai
+//of methods which will taki jab ha, user to import karway usse puch le password sahi hai ki nai
 //kyolki db me encrypted save hai aur user jo bahar bhejega vo hoga 1234
-//mongoose gives us lots of methods , so we can make medthodsas well like middleware
+//mongoose gives us lots of methods , so we can make methods as well like middleware
 //how to make custom methods
 
 
@@ -87,7 +88,7 @@ return await bcrypt.compare(password,this) //used for comparison takes time so m
 userSchema.methods.generateAccessToken=function(){//JWT ke pass sign methods hai jo generate kar deta hai token
     return jwt.sign({   //hamare pas already chize stored hai database me aur iske pass access hai this ka to ye db se utha lega
         _id: this._id,
-        emial:this.email,
+        email:this.email,
         username:this.username,
         fullName:this.fullName
     },process.env.ACCESS_TOKEN_SECRET,{

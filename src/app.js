@@ -14,8 +14,8 @@ App.use(cors({
 
 
 
-//data kahi se bhi aa skata hai data basckend me json, url, body etc
-App.use(express.json({limit:"16kb"})) //means mai json ko accespt kar raha hu limit updo 16kb only,
+//data kahi se bhi aa skata hai data backend me json, url, body etc
+App.use(express.json({limit:"16kb"})) //means mai json ko accespt kar raha hu limit upto 16kb only,
                                         //multer allow file uploading facility
 
 

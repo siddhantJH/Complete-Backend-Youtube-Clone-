@@ -5,7 +5,7 @@ import App from './app.js'
 import dotenv from "dotenv" //then config it
 dotenv.config({
     path:'./env'
-})//other way is to make changes in the package.json in dev script     "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
+})//other way is to make changes in the package.json in dev script  "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
 //means let me choose the expeimarntal feature
 
 import mongoose from "mongoose"  //get mongoose variable
@@ -17,6 +17,7 @@ import connectDB from "./db/index.js"
 
 connectDB()
 .then(()=>{
+    //this will run only when database connection is successful
     //yaha pe aap app ka use karke listen karenge
     App.listen(process.env.PORT || 8000,()=>{
         console.log(`Server is running at port : ${process.env.PORT}`)
