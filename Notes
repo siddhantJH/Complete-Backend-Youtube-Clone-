@@ -121,10 +121,10 @@ in order to solve that we will use nodemon what it does that as soon as file sav
 
 
 //when you go there you will see two things 
-Dependency:This is the dependency which we generally use during the production 
+# Dependency:This is the dependency which we generally use during the production 
 
 
-Dev dependency: It is dependency which we use during development and not during production , This is usualy get installed during nodemon 
+# Dev dependency: It is dependency which we use during development and not during production , This is usualy get installed during nodemon 
                 npm i nodemon this becomes main 
                 npm install --save-dev nodemon this install dev dependency and doe snot go into production 
 
@@ -138,7 +138,7 @@ now we also need to add some folder inside the source, this is how we startup th
 grade project
 
 
-folders needed in src
+# folders needed in src
 1) controller folders which keeps the logic
 2) db : how to connect the database connection logic 
 3) middlewares : any code which runs in between is doen using this middleware , aapke pas request aai vo server full fill kare usse pehele mai middle ware laga dunga , like cookie do etc
@@ -205,3 +205,12 @@ third party website.
 //har api endpoint me file nai aane wali, register me aa sakti hai login me kabhi nai aaegi
 //kyoki koi bhi image ke sath login nai karta hai,so better to make a seprate utility function for file
 //upload
+
+//whenever you upload a file you atleast get two packages int the backend
+# Express file upload (express-fileupload)
+# multer is almost same as above (multer) : Go to github folder
+
+
+//why both?: Upload file using multer from the user and store it in the local server , then using cloudnary
+store it in the cloud, atleast hamare server me aik bar file aa gai to repload ka chances bane, details are present in cloudinary file
+//now ham multer ka use karke middle ware banaenge, used to take file from user to filesystem server
