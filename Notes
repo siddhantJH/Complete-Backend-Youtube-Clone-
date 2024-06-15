@@ -52,14 +52,14 @@ index(used to connect Database)        App.js(config cookie url code)        con
 ->Models (Then we have models structure of how data is stored is shown here, like for mongoos it is diff , tells us what to store what to ask for )
 ->controllers  (functionaly is stored here like function , which takes data and process it )
 ->routes (on which url which function to call)
-->middleware ()
-->utils (These keeps the mailing function which are used repetedly)
+->middleware (these are the function which runs before a particaular task )
+->utils (These keeps the mailing function, db update and file upload kind of function which are used repetedly)
 ->More (depends)
 
 
 # HOW TO DEPLOY BACKEND
   first and only major requrement is nodeJS ,  than type node -v which gives us the version of the node 
-  next we need npm which is node package manager which helps us install the packagfes
+  next we need npm which is node package manager which helps us install the packages
 
 
 
