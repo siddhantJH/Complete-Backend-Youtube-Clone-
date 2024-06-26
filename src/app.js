@@ -32,6 +32,28 @@ App.use(express.static("public")) //when we want to store file in server or imag
 //App.use()
 App.use(cookieParser()) //can also pass option inside using object
 
+//routes are also defined here
+import router from "./routes/user.routes.js"
+//when we declare routes we follow some good practice , we do app.get
+//now you might think that as soon as user clicks on the url or endpoint we will run the user controller
+//but that is not what we do , the reason is
+//previoulsy we were using app,get and it was working well the reson is
+//we were not importing any of the controller , app ke through yahi routes likhre the yahi controller likh rahe the
+//now since router ko app alag le gae ho to ab router ko lane ke liye middleware lana padega
+App.use("/users",router)//koi bhi /users run karega to ye controller call ho jaega,whenever anyone comes to this it will not handle it
+//it will give the control to router
+
+//now the url will look something like this
+// https::localhost:8080/users/register
+// https::localhost:8080/users/login
+//ab agar aapko naya routes likhna hai you dont have to import it you can directly go to tge file in user.routes and define it there
+
+
+
+
+
+
+
 
 //cooie parser
 //cors

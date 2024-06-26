@@ -16,12 +16,12 @@
                     
 //FIRST WAY
 // async function is higher order ufnciton it takes function as a parameter 
-const asyncHandler=(fn)=>async ()=>{
+const asyncHandler=(fn)=>async (req,res,next)=>{ //returning the function
     try{
         await fn(req,res,next)   //jo function liya hai execute karo
     }catch(error){
         const statusCode = error.code || 500;
-        const errorResponse = new ApiError(statusCode, null, error.message);
+        const errorResponse = new ApiError(statusCode, null, error.message);   //in case of error use the error class to create a error response and pass it to the res
         res.status(statusCode).json(errorResponse);
     }
 }
@@ -29,7 +29,7 @@ const asyncHandler=(fn)=>async ()=>{
 //so we need a class for ApiError and every error shoudl go through it
 
 
-//SECOND WAY(promise approach)
+// SECOND WAY(promise approach)
 // const asyncHandler = (requestHandler)=>{
 //  return (req,res,next)=>{
 //     Promise.resolve(requestHandler(req,res,next)).catch((error)=> next(err))
