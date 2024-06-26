@@ -1,13 +1,14 @@
 import mongoose from "mongoose"
-import { jwt } from "jsonwebtoken"
-import bcrypt from "bcrypt"
+import  jwt  from "jsonwebtoken"
+import bcrypt from "bcrypt-nodejs"
+import { Video } from "./video.model.js"
 
 
 //agar searching avha karna chahte ho to indexing true kardo 
 const userSchema = new mongoose.Schema({
     watchHistory:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:[video] //maintain an array of the videos watched by the user 
+        ref:"Video" //maintain an array of the videos watched by the user
     },
     username:{
         type:String,
@@ -45,7 +46,8 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     }
-},{timestamps:true})//created at and updated at automatically mil jaega )
+},{timestamps:true})//created at and updated at
+//automatically mil jaega )
 
 
 
@@ -123,5 +125,5 @@ userSchema.methods.generateRefreshToken=function(){
 
 //aap ko jitne methods chahiye aap unko schema me inject kar sakte ho
 
-export const User = mongoose.models('user',userSchema)//mongo db me users nam se save hoga
+export const User = mongoose.model('user',userSchema)//mongo db me users nam se save hoga
 

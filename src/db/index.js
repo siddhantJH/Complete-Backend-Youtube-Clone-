@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import {DB_NAME} from "../constant.js";
-
+import {User} from "../models/user.model.js"
 
 const connectDB = async()=>{  //since ye acynchronous methos hai to ue promise
                             //bhi return karta hai to jaha aap ise call karenge waha aapko promise store karna hoga

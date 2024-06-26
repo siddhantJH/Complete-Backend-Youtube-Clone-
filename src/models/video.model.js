@@ -42,7 +42,7 @@ const videoSchema=new mongoose.Schema({
 
 
 videoSchema.plugin(mongooseAggregatePaginate) //we can add plugin as well and add the paginate
-export const Video=mongoose.models('video',videoSchema)
+export const Video=mongoose.model('video',videoSchema)
 
 
 

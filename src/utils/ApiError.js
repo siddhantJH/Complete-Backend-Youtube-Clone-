@@ -1,5 +1,5 @@
 class ApiError extends Error{  //make a standarize error format
-    constructor(statusCode,message="Something Went Wrong",errors=[],statck=""){
+    constructor(statusCode,message="Something Went Wrong",errors=[],stack=""){
         super(message) 
         this.statusCode=statusCode
         this.data=null

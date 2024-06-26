@@ -12,7 +12,7 @@
 //const asyncHandler = (func)=>()=>{} 
 //const asyncHandler = (func)=>async (re,res,next)=>{} 
 
-
+import { ApiError } from "./ApiError.js";
                     
 //FIRST WAY
 // async function is higher order ufnciton it takes function as a parameter 
