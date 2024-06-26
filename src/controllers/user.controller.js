@@ -4,13 +4,18 @@
 
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 import { User } from "../models/user.model.js";
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
+
 
 //this will register user,use asynchandler
 const registerUser=asyncHandler(async (req,res)=>{
-    res.status(200).json({
-        message:"hello"
-    })
+    // console.log(req.body) //this is a json object which we have received as a req
+    // console.log(req.files)
+    // res.status(200).json({
+    //     message:"hello"
+    // })
     //now we will properly try to register the user
     //we will do it by breakdown
     // step1)
@@ -34,17 +39,16 @@ const registerUser=asyncHandler(async (req,res)=>{
     //xform se bhi bhej sakte hai (url encoded hai)
     //file bhejme ko option nai hai , ham raw data b hejenge (means sidha json bhejo)
     const {fullName,email,username,password}=req.body
-    if([fullName,email,username,password].some((field)=>{
-        return field?.trim()===""?false:true;
-    }))
+    if([fullName,email,username,password].some((field)=>
+       field?.trim()===""))
         {
-            throw new ApiError(400,"fullname is required")
+            throw new ApiError(400,"All fields are required")
         }
-
+    
     //now we need to check that user exist or not now ye imported user variable mongoose se direct connect kar sakta hai
     //because it was created usign mongoose
    const existedUser = User.findOne({
-        $or:[email,username]  //ye $or operatir pe array assign kardo to ye sari check hoga db me exist karti hai ya nai
+        $or:[{email},{username}]  //ye $or operatir pe array assign kardo to ye sari check hoga db me exist karti hai ya nai
     }) //returns the first founded user
 
     if(existedUser)
@@ -53,10 +57,45 @@ const registerUser=asyncHandler(async (req,res)=>{
     }
 
     //now we need to check the images and avatar for that we have already used the multer
-    //and htes emiddleware onmlymodify the req.body and add new fields in it
+    //and htes emiddleware onmly modify the req and add new fields in it
     //req.body ka access hame express ne diya hai multer hame req.files ka access deta h
+    //hamne dono file ka local path var me store kar liya hai
+    //ye honge nai honge no garantee (check avatar as it is required)
     const avatarLocalPath=req.files?.avatar[0]?.path;
-    const coverImage=req.files?.coverImage[0]?.path;
+    if(!avatarLocalPath)
+        {
+            return new ApiError(400,"avatar required compulsary")
+        }
+    const coverImageLocalPath=req.files?.coverImage[0]?.path;
+    //now we need to upload it on cloudinary
+
+    const avatar=await uploadOnCloudinary(avatarLocalPath);//success ke case me ham file delete nai karwa rahe bulki sirf url bhej rahe hai (delete karwana zaruri hai)
+    const coverImage=await uploadOnCloudinary(coverImageLocalPath)
+    if(!avatar){
+        throw new ApiError(400,"avatar is needed")
+    }
+    const user=await User.create({
+        fullName,
+        avatar: avatar.url,
+        coverImage:coverImage?.url || "",
+        email,
+        password,
+        username:username.toLowerCase()
+    })
+    //mondo add _id on each entry
+    //the advantage of this is we can chain , .select karke 
+    //we can choose field , we pass 
+    //we pass a string inside this 
+    //yaha par ham ye likhte hai kya kya nahi chahiye
+    const createdUser=await User.findById(user._id).select(
+        "-password -refreshToken "
+    )
+    if(!createdUser){
+        throw new ApiError(500,"Something went wrong while registering the user")
+    }
+    return res.status(201).json(
+        new ApiResponse(200,createdUser,"User registered successfully")
+    )
 })
 export {registerUser}
 //next we need to create the routes , now when to run this methood this will run when a url will hit 

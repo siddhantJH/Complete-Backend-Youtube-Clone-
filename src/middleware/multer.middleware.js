@@ -4,13 +4,16 @@ import multer from "multer" //it will be used to upload the file from the user a
                             //we need cloudinary.
 import express from "express"; // Import express
 
+
+
+
 // Custom storage configuration for multer
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "./public/temp"); // Set the destination for uploaded files
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname); // Use the original name of the file
+        cb(null, file.originalname); // Use the original name of the file as filename
     }
 });
 

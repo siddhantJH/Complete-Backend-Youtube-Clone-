@@ -60,7 +60,8 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save",async function(next){
     if(this.isModified("password")){
-    this.password = bcrypt.hash(this.password,10)     //first arg is pass, 2nd pass is rounds
+        //excryption also takes time so we need to await as well
+    this.password =await bcrypt.hash(this.password,10)     //first arg is pass, 2nd pass is rounds
     next() //jab mai password field ka modification bheju tabhi isko run karna hai,
             //agar password modification nai hai to run mat karo,then it saves the password as well
 }})

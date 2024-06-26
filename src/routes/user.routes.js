@@ -1,7 +1,7 @@
 //now we will make routes for the user 
 import {Router} from "express"
 import { registerUser } from "../controllers/user.controller.js"
-import { upload } from "../middleware/multer.middleware.js"  //it runs in between jane se pehele milke jana
+import { upload } from "../middleware/multer.middleware.js"  //it runs in between, jane se pehele milke jana
 
 
 //now hamne chizo ko segregate kar diya hai 
@@ -11,7 +11,9 @@ const router=Router()
 //accordingly call hoga 
 //agar /register hit hoga to we wil call this 
 //pass a middleware function in the post function itself
+//registerUser execute karne se pehele ye middle ware user karo
 router.route("/register").post(upload.fields([{
+    //since we are accepting two files so we will accept two obj
     name:"avatar",
     maxCount:1,
 },{
