@@ -29,7 +29,7 @@ const uploadOnCloudinary = async (localFilePath) =>{
        }) //we could also give a file path like file type etc
        //file has been uploaded successfully
        console.log("File uploaded successfully",response.url)
-       return url
+       return response.url
     } catch (error) {
         //now we know that the file is present int he servers file system , now we need to 
         //remove it if incase the upload fail so we need to unlink it from the server for 

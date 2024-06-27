@@ -8,8 +8,7 @@ dotenv.config({
 })//other way is to make changes in the package.json in dev script  "dev": "nodemon -r dotenv/config --experimental-json-modules src/index.js"
 //means let me choose the expeimarntal feature
 
-import mongoose from "mongoose"  //get mongoose variable
-import express from "express"
+
 import connectDB from "./db/index.js"
 // const app =express()
 //TYPE 1 go to db make index.js file

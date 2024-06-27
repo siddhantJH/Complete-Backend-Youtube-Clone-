@@ -53,15 +53,22 @@ App.use(express.static("public")) //when we want to store file in server or imag
 App.use(cookieParser()) //can also pass option inside using object
 
 //routes are also defined here
-import router from "./routes/user.routes.js"
+//importt the router and user-routes(function) here 
+import UserRouter from "./routes/user.routes.js"
 //when we declare routes we follow some good practice , we do app.get
+//we were use app.get ye ham tba bolte the jab router export nahi kar rahe the 
+//ham app.get se kam kar pa rahe the kyoki ham app ke through yahi routes likh rahe the 
+//yahi pe aap controllers likh rahe the ,lekin since aapne ab chize seprate kar di hai 
+//router ko app alag rakh liye ho to ab router ko lane ke liye middleware lana padega 
+//compulsary hai this is the syntaxso we will use app.use 
 //now you might think that as soon as user clicks on the url or endpoint we will run the user controller
 //but that is not what we do , the reason is
 //previoulsy we were using app,get and it was working well the reson is
 //we were not importing any of the controller , app ke through yahi routes likhre the yahi controller likh rahe the
 //now since router ko app alag le gae ho to ab router ko lane ke liye middleware lana padega
-App.use("/users",router)//koi bhi /users run karega to ye controller call ho jaega,whenever anyone comes to this it will not handle it
-//it will give the control to router
+//aap jo bhi yaha par doge vo ho jata hai prefix , ie local host :8000/users to aapka control chal jata hai Userrouter ko
+App.use("/users",UserRouter)//koi bhi /users run karega to ye controller call ho jaega,whenever anyone comes to this it will not handle it
+//it will give the control to router, jo router activate karwana hai vo second arg lkh do 
 
 //now the url will look something like this
 // https::localhost:8080/users/register
