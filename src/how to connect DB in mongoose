@@ -1,0 +1,184 @@
+//open mongoose website go to project 
+
+//search mongo db atlas : subservice which gives online database 
+//it gives us shared database for free can be upgraded for professional use
+
+
+//signin and refresh the accouont if already created 
+step1)Create organisation , then go insise organisation and create a priject 
+
+step2)Lot of accouts of mongodb atlas they give us by default project, create deployemtnt
+
+step3)click on create deployement now select where you want to deploy your deatabase 
+
+step4)select the country you want to deploy 
+
+step5)name the cluster0 the deployement name , now mongo db behinde the scene go to aws and created the database and provide connection strings
+
+step6)create usr by going into quick start, now it ask us from where to take , select local deployement 
+
+
+step7) do to network settign and select the ip address range which can accept coonnection from all the ip(by going into network access)
+(usually ip is set where you backend is deployed)
+
+step8)go to db access we see the user list
+        select create build and write nay db 
+
+setp9)click on connect , select how you want to connect the db get the stirng and assign password and userid
+
+
+step10)now to connect database go to enviorment variable and store the required credentials for your database connectiono
+
+step11)Then paste your credentials for the database, what if passowrd has specital characters remove the ending slash formt he credentials 
+
+step12)now we need to set the name of the database and store it in the contant files,
+
+
+step13) databse connectionc can happen in two types sara code mai index me rakh lu jaise index file jaise load hogs db load kar lunga p, aur agar db code kahi aur likhunga to index me import karke mai use kar paunge ye cleaner hoga 
+
+
+step14)App use hogi express ke through database hoga mongoose ke thorough, npm i mongoose express dotenv
+
+
+step15) now come to index.js import mongoose , it helps us connect to database 
+mongoose.connect(atlas url),always wrap in try catch or promise(erro yaha bhi handle ho jati hai resolvse reject se ) , assume db is in seprate continent , async await lagana padega.use iffi statement
+
+
+step16)use await in mongoose.connect as it takes tipe , 
+
+
+step17) import express from express make an app outof it jaisehi DB connect ho gaya , app listener banado , ye events ko listen kar sakti hai ye hai errors ka events,
+also listen to the specific port. (so it essentially menas we will start listening afeter db connection is success full)
+
+step18)Another approach is create a db arrow async function insid eit make a try catch block and then in error block write the normal things which needs tot be presnet then insid eht etry bloack return the promise 
+return await mongoose.connect(creds) then on the receiving side usse the .then resolve code 
+
+
+step19) mongoose actulky me aapko aik return object deta hai jo hot ahai connection instance , and console log it 
+mongo db connected ,and print the host using the connection instance 
+
+
+step20)sometimes while importing the function from a file 
+we need to mention the file name and extension , be sure to make a proper catch block it helps you knwo on which file you have an error 
+
+
+//English Commecnts
+
+Certainly! Here is a step-by-step guide on setting up MongoDB Atlas, creating a database, and connecting it using Mongoose in an Express application:
+
+### Step-by-Step Guide to MongoDB Atlas Setup and Mongoose Integration
+
+#### Step 1: Sign In and Create an Organization
+1. Sign in to your MongoDB Atlas account. If you don't have an account, create one.
+2. Once signed in, create an organization. Navigate inside the organization to create a project.
+
+#### Step 2: Create a Deployment
+1. By default, MongoDB Atlas provides a project. Go inside the project and click on "Create Deployment."
+2. Select the deployment location (cloud provider and region) for your database.
+
+#### Step 3: Select Deployment Country
+1. Choose the country or region where you want to deploy your database.
+
+#### Step 4: Name Your Cluster
+1. Name the deployment (e.g., `Cluster0`). MongoDB Atlas will create the database on AWS and provide connection strings.
+
+#### Step 5: Create a User
+1. Go to the "Quick Start" guide and create a user.
+2. Select "Local Deployment" when prompted.
+
+#### Step 6: Network Settings
+1. Go to "Network Access" and configure the IP address range that can access the database.
+2. Allow connections from all IP addresses (useful if you are not sure where your backend will be deployed).
+
+#### Step 7: Database Access
+1. Go to "Database Access" to see the user list.
+2. Create a user with read and write permissions for any database.
+
+#### Step 8: Connect to the Database
+1. Click on "Connect" and choose the connection method.
+2. Get the connection string and assign a username and password.
+
+#### Step 9: Environment Variables
+1. Store the database credentials (connection string, username, password) in environment variables.
+
+#### Step 10: Special Characters in Password
+1. If your password contains special characters, remove any trailing slashes from the connection string.
+
+#### Step 11: Set Database Name
+1. Store the database name in a constants file.
+
+#### Step 12: Database Connection Code
+1. You can place the database connection code in the `index.js` file or in a separate file for cleaner code.
+
+#### Step 13: Install Dependencies
+1. Use Express and Mongoose in your application:
+   ```bash
+   npm install mongoose express dotenv
+   ```
+
+#### Step 14: Connect to the Database
+1. In your `index.js`, import Mongoose:
+   ```javascript
+   const mongoose = require('mongoose');
+   ```
+2. Connect to the database using the connection string:
+   ```javascript
+   mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+   ```
+
+#### Step 15: Handle Connection with Try-Catch
+1. Wrap the connection code in a try-catch block or use async-await to handle errors:
+   ```javascript
+   (async () => {
+       try {
+           await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+           console.log('MongoDB connected');
+       } catch (error) {
+           console.error('Error connecting to MongoDB', error);
+       }
+   })();
+   ```
+
+#### Step 16: Create an Express App
+1. Import Express and create an app:
+   ```javascript
+   const express = require('express');
+   const app = express();
+   ```
+2. Start the app after the database is connected:
+   ```javascript
+   mongoose.connection.once('open', () => {
+       console.log('Connected to MongoDB');
+       app.listen(process.env.PORT, () => {
+           console.log(`Server is running on port ${process.env.PORT}`);
+       });
+   });
+   ```
+
+#### Step 17: Async Function for Database Connection
+1. Alternatively, create an async function for database connection:
+   ```javascript
+   const connectDB = async () => {
+       try {
+           const conn = await mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+           console.log(`MongoDB connected: ${conn.connection.host}`);
+       } catch (error) {
+           console.error(`Error: ${error.message}`);
+           process.exit(1);
+       }
+   };
+   ```
+
+2. Call this function before starting the server:
+   ```javascript
+   connectDB().then(() => {
+       app.listen(process.env.PORT, () => {
+           console.log(`Server running on port ${process.env.PORT}`);
+       });
+   });
+   ```
+
+#### Step 18: Handle Import Errors
+1. When importing functions from a file, ensure you include the file name and extension. Properly handle errors with a catch block to identify where the error occurs.
+
+This guide should help you set up MongoDB Atlas, create a database, and connect it using Mongoose in an Express application without any loss of information.

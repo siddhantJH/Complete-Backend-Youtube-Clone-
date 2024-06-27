@@ -4,6 +4,14 @@ import cookieParser from "cookie-parser" //iska kam bas itna hai ki mai apne ser
                                         //sometime we can keep secure cookie int the broser and only server can read it
 const App=express()
 
+//data can come int the backend in various ways and techniques 
+//like url , json , body, form , direct form , json form 
+//like that we need to limit the a amount of json or other data  that is coming to my backend 
+//so to configure all that we need to use middleware the app.use 
+
+
+
+
 
 
 //how to confogiure each
@@ -15,21 +23,33 @@ App.use(cors({
 
 
 //data kahi se bhi aa skata hai data backend me json, url, body etc
+//limit the coming of the json
+//earlier the express was not able to accept the json parser we had to use the body parser for that
+//but now body parser ka kam express me aa gaya hai
+//but bht sare code base me use hota hia body parser
 App.use(express.json({limit:"16kb"})) //means mai json ko accespt kar raha hu limit upto 16kb only,
                                         //multer allow file uploading facility
 
 
-//what is url se data aae
+//configure the backend to accept data from the url ,what if url se data aae
+//now there might be some issue when data comes form url
+//url ka encoder hota hia apna apna, aur url ka sppace %20 encoded hota hai to
+//aapko express ko batana padega encoding
+//extended mean aap object ke andar bhi object de sakte ho
 App.use(express.urlencoded({
     extended:true,
     limit:"16kb"
 }))
 
+
+//jab hame kuch files aur folder store karna chahta hu to publi folder asset banate hai ham
+//why do we keep it
 App.use(express.static("public")) //when we want to store file in server or images or favicon
 
 
 //since cookie parser is a configuration so we will still use the
 //App.use()
+//mai mere server user ka browser ka cookie access kar pao aur crud operation
 App.use(cookieParser()) //can also pass option inside using object
 
 //routes are also defined here

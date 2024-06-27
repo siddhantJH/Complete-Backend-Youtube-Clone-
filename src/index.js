@@ -14,6 +14,10 @@ import connectDB from "./db/index.js"
 // const app =express()
 //TYPE 1 go to db make index.js file
 
+//DB is written as asynchronous method means it will return a promise
+//so we need to resolve it using .then and .catch
+//mongo DB connection failed,.then ke andar jo callback hjai bvo tab chalega
+//jab promise resolve ho jaega matlab mongo db connect ho jaega
 
 connectDB()
 .then(()=>{
