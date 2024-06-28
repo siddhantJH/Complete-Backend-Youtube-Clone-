@@ -2,11 +2,12 @@
 // //this helps us wiritng the abundant code , acts as a wrapper 
 
 
-// import { asyncHandler } from "../utils/asyncHandler.js";
-// import { ApiError } from "../utils/ApiError.js";
-// import { ApiResponse } from "../utils/ApiResponse.js";
-// import { User } from "../models/user.model.js";
-// import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import { User } from "../models/user.model.js";
+import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import jwt from "jsonwebtoken"
 
 
 // //this will register user,use asynchandler
@@ -113,13 +114,13 @@
 // //we make seprate folder for it named as routes
 
 
-import { asyncHandler } from "../utils/asyncHandler.js";
-import {ApiError} from "../utils/ApiError.js"
-import { User} from "../models/user.model.js"
-import {uploadOnCloudinary} from "../utils/cloudinary.js"
-import { ApiResponse } from "../utils/ApiResponse.js";
-import jwt from "jsonwebtoken"
-import mongoose from "mongoose";
+// import { asyncHandler } from "../utils/asyncHandler.js";
+// import {ApiError} from "../utils/ApiError.js"
+// import {User} from "../models/user.model.js"
+// import {uploadOnCloudinary} from "../utils/cloudinary.js"
+// import { ApiResponse } from "../utils/ApiResponse.js";
+// import jwt from "jsonwebtoken"
+// import mongoose from "mongoose";
 
 
 const generateAccessAndRefereshTokens = async(userId) =>{
@@ -140,6 +141,7 @@ const generateAccessAndRefereshTokens = async(userId) =>{
 }
 
 const registerUser = asyncHandler( async (req, res) => {
+    // console.log(req.body)
     // get user details from frontend
     // validation - not empty
     // check if user already exists: username, email
@@ -149,7 +151,6 @@ const registerUser = asyncHandler( async (req, res) => {
     // remove password and refresh token field from response
     // check for user creation
     // return res
-
 
     const {fullName, email, username, password } = req.body
     //console.log("email: ", email);
@@ -163,45 +164,59 @@ const registerUser = asyncHandler( async (req, res) => {
     const existedUser = await User.findOne({
         $or: [{ username }, { email }]
     })
-
+    // console.log(existedUser)
+ 
     if (existedUser) {
         throw new ApiError(409, "User with email or username already exists")
     }
-    //console.log(req.files);
+    // console.log(req.files);
 
     const avatarLocalPath = req.files?.avatar[0]?.path;
-    //const coverImageLocalPath = req.files?.coverImage[0]?.path;
-
+    //const coverImageLocalPath = req.files?.coverImage[0]?.path; //isme error aa sakti hai undefined variable wali agar hamne nai bheja coverimage to 
     let coverImageLocalPath;
+    //check if req.files aai hai ya nai , Array.isArray:what it does is it tells us ki properly hamare pas array aya hai ya nai 
+    //req.file.coverImage agar ye array hai ya nai aur uski len 0 se jyada hai ya nai 
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
-        coverImageLocalPath = req.files.coverImage[0].path
+        coverImageLocalPath = req.files.coverImage[0].path //oth element se path nikalo 
     }
-    
+    // console.log(avatarLocalPath,coverImageLocalPath)
 
     if (!avatarLocalPath) {
-        throw new ApiError(400, "Avatar file is required")
+        throw new ApiError(400, "Avatar file is required error in LocalPath")
     }
 
     const avatar = await uploadOnCloudinary(avatarLocalPath)
     const coverImage = await uploadOnCloudinary(coverImageLocalPath)
-
+    // console.log(avatar,coverImage)
     if (!avatar) {
-        throw new ApiError(400, "Avatar file is required ")
+        throw new ApiError(400, "Avatar file is required error in cloudinary url ")
     }
    
+    // console.log("we are here 1",fullName,avatar.url,coverImage.url,email,password,username)
+    let user
+try {
+    user = await User.create({
+    fullName,
+    avatar: avatar.url,
+    coverImage: coverImage?.url || "",
+    email,
+    password,
+    username: username.toLowerCase(),
+  });
+  console.log("User created successfully:", user);
+} catch (error) {
+  console.error("Error creating user:", error);
+  // Handle the error appropriately, e.g., log more details or send an error response
+}
 
-    const user = await User.create({
-        fullName,
-        avatar: avatar.url,
-        coverImage: coverImage?.url || "",
-        email, 
-        password,
-        username: username.toLowerCase()
-    })
+
+
 
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
+
+    // console.log(user)
 
     if (!createdUser) {
         throw new ApiError(500, "Something went wrong while registering the user")
@@ -222,7 +237,7 @@ const loginUser = asyncHandler(async (req, res) =>{
     //send cookie
 
     const {email, username, password} = req.body
-    console.log(email);
+    // console.log(email);
 
     if (!username && !email) {
         throw new ApiError(400, "username or email is required")
