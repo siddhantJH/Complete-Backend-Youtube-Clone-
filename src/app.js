@@ -42,6 +42,7 @@ App.use(express.urlencoded({
 }))
 
 
+
 //jab hame kuch files aur folder store karna chahta hu to publi folder asset banate hai ham
 //why do we keep it
 App.use(express.static("public")) //when we want to store file in server or images or favicon
@@ -63,7 +64,7 @@ import UserRouter from "./routes/user.routes.js"
 //compulsary hai this is the syntaxso we will use app.use 
 //now you might think that as soon as user clicks on the url or endpoint we will run the user controller
 //but that is not what we do , the reason is
-//previoulsy we were using app,get and it was working well the reson is
+//previoulsy we were using app.get and it was working well the reason is
 //we were not importing any of the controller , app ke through yahi routes likhre the yahi controller likh rahe the
 //now since router ko app alag le gae ho to ab router ko lane ke liye middleware lana padega
 //aap jo bhi yaha par doge vo ho jata hai prefix , ie local host :8000/users to aapka control chal jata hai Userrouter ko

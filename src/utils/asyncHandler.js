@@ -16,9 +16,9 @@ import { ApiError } from "./ApiError.js";
                     
 //FIRST WAY
 // async function is higher order ufnciton it takes function as a parameter 
-const asyncHandler=(fn)=>async (req,res,next)=>{ //returning the function
+const asyncHandler=(fn)=>async (req,res)=>{ //returning the function
     try{
-        await fn(req,res,next)   //jo function liya hai execute karo
+        await fn(req,res)   //jo function liya hai execute karo
     }catch(error){
         const statusCode = error.code || 500;
         const errorResponse = new ApiError(statusCode, null, error.message);   //in case of error use the error class to create a error response and pass it to the res

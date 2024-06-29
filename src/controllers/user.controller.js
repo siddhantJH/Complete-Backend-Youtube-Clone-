@@ -125,23 +125,33 @@ import jwt from "jsonwebtoken"
 
 const generateAccessAndRefereshTokens = async(userId) =>{
     try {
+        //we have received user document or instance of the object 
+        //equal to that of id 
+        //we have made a method for both generate and refresh in the
+        //user model  
         const user = await User.findById(userId)
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
 
+
+        //we give access token to the user but we save the refresh token 
+        //to the database as well so that we dont have to ask the 
+        //id and password from ehe user everytime 
+        //to store the refresh token in the database 
+        //simple add this property in the user so we need to save it back in the 
+        //data as well so we have save method for that 
         user.refreshToken = refreshToken
+        //this validatebeforesace is kept false the reason for that is 
+        //dont put validation simply save it in the database 
         await user.save({ validateBeforeSave: false })
-
         return {accessToken, refreshToken}
-
-
     } catch (error) {
         throw new ApiError(500, "Something went wrong while generating referesh and access token")
     }
 }
 
 const registerUser = asyncHandler( async (req, res) => {
-    // console.log(req.body)
+    console.log(req.body)
     // get user details from frontend
     // validation - not empty
     // check if user already exists: username, email
@@ -155,9 +165,7 @@ const registerUser = asyncHandler( async (req, res) => {
     const {fullName, email, username, password } = req.body
     //console.log("email: ", email);
 
-    if (
-        [fullName, email, username, password].some((field) => field?.trim() === "")
-    ) {
+    if ([fullName, email, username, password].some((field) => field?.trim() === "")) {
         throw new ApiError(400, "All fields are required")
     }
 
@@ -208,10 +216,6 @@ try {
   console.error("Error creating user:", error);
   // Handle the error appropriately, e.g., log more details or send an error response
 }
-
-
-
-
     const createdUser = await User.findById(user._id).select(
         "-password -refreshToken"
     )
@@ -228,6 +232,92 @@ try {
 
 } )
 
+// const loginUser = asyncHandler(async (req, res) =>{
+//     // req body -> data
+//     // username or email
+//     //find the user
+//     //password check
+//     //access and referesh token generate boath and send it to the user 
+//     //send token into the cookies in secure cookies 
+//     //send cookie
+//     //then send the response the job is done 
+//     console.log(req.body)
+//     const {email, username, password} = req.body
+//     // console.log(email);
+
+//     if (!username && !email) {
+//         throw new ApiError(400, "username or password is required")
+//     }
+    
+//     // Here is an alternative of above code based on logic discussed in video:
+//     // if (!(username || email)) {
+//     //     throw new ApiError(400, "username or email is required")
+        
+//     // }
+
+//     //find user according to the username or the email
+//     const user = await User.findOne({
+//         $or: [{username}, {email}]   //$or key hoga value array of object hoga 
+//     })
+
+//     if (!user) {
+//         throw new ApiError(404, "User does not exist")
+//     }
+
+//    const isPasswordValid = await user.isPasswordCorrect(password)
+
+//    if (!isPasswordValid) {
+//     throw new ApiError(401, "Invalid user credentials")
+//     }
+
+//     //this is common so put it in the seprate method 
+//     //as this will be done very frequently
+//    const {accessToken, refreshToken} = await generateAccessAndRefereshTokens(user._id)
+
+//    //we did this because in above user we did not had 
+//    //a user with refrest and access token so we asked from 
+//    //db again 
+//     const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+
+//     //we need to send the option 
+//     //what this does is cookies can be modified in front end 
+//     //now when we do httpOnly true 
+//     //it cannot be modified by the frontend 
+//     //then we need to secure it 
+//     const options = {
+//         httpOnly: true,
+//         secure: true
+//     }
+
+//     //to send things in a cookie we need to do this 
+//     //since we have added cookie parser so w hamare pas cookie ka access aa jaega 
+//     //sending json response 
+//     //in response we can see that we are sending the accesstoek and refresh both 
+//     //we are sending it again 
+//     //yaha par ham vo case handle kar rahe hai jaha user khud apna 
+//     //access token and refresh token ko save karna chah raha ho 
+//     //ya fir storeage me locally ya fir mobile me save karna chah raha hoga 
+//     //kyoki waha cookie save nahi hogi 
+//     //to agar apne tarike se save karna hai to send kardo
+//     return res
+//     .status(200)
+//     .cookie("accessToken", accessToken, options)
+//     .cookie("refreshToken", refreshToken, options)
+//     .json(
+//         new ApiResponse(
+//             200, 
+//             //this is the data part of the apiresponse 
+//             {
+//                 user: loggedInUser, accessToken, refreshToken
+//             },
+//             "User logged In Successfully"
+//         )
+//     )
+
+// })
+
+
+
 const loginUser = asyncHandler(async (req, res) =>{
     // req body -> data
     // username or email
@@ -235,9 +325,9 @@ const loginUser = asyncHandler(async (req, res) =>{
     //password check
     //access and referesh token
     //send cookie
-
+    console.log(req.headers,req.body)
     const {email, username, password} = req.body
-    // console.log(email);
+    console.log(email);
 
     if (!username && !email) {
         throw new ApiError(400, "username or email is required")
@@ -288,7 +378,14 @@ const loginUser = asyncHandler(async (req, res) =>{
 
 })
 
+//whenever any user click on the logout button 
+//how can i logout the user 
+//i can log out the user by simply clearing the cookie 
+//ie remove refresh and access token , refresh from user and db
+//and access from the user only 
 const logoutUser = asyncHandler(async(req, res) => {
+    //we need to remove the access token from the user 
+    //refresh token from both user nad db 
     await User.findByIdAndUpdate(
         req.user._id,
         {

@@ -1,6 +1,6 @@
 //now we will make routes for the user 
 import {Router} from "express"
-import { registerUser } from "../controllers/user.controller.js"
+import { loginUser, registerUser } from "../controllers/user.controller.js"
 import { upload } from "../middleware/multer.middleware.js"  //it runs in between, jane se pehele milke jana
 
 
@@ -11,7 +11,7 @@ const UserRouter=Router()
 //accordingly call hoga 
 //agar /register hit hoga to we wil call this 
 //pass a middleware function in the post function itself
-//registerUser execute karne se pehele ye middle ware user karo
+//registerUser execute karne se pehele ye middle ware use karo
 //router mai aapko aik route batata hu /register lekin ab jo karna hai(get , post...etx) vo aap dot laga kar use kar sakte ho
 //ab post me kaumn sa method run hona chahiye bo mention karo post ke andar
 ///Users/register to ye call ho jaega 
@@ -25,12 +25,15 @@ UserRouter.route("/register").post(upload.fields([{
     name:"coverImage",
     maxCount:1,
 }]),registerUser)
+
+
+//login
+UserRouter.route("/login").post(loginUser)
+
 //now ham images bhej paenge
 //here we will write post (this is a post method not get so in the postman use POST not GET)
-// router.route("/login").post(login)//here we will write post 
+//router.route("/login").post(login)//here we will write post 
 //to do file handling first import the multer middleware
-
-
 export default UserRouter
 
 
