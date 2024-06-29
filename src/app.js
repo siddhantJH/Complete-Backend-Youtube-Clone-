@@ -27,7 +27,7 @@ App.use(cors({
 //earlier the express was not able to accept the json parser we had to use the body parser for that
 //but now body parser ka kam express me aa gaya hai
 //but bht sare code base me use hota hia body parser
-App.use(express.json({limit:"16kb"})) //means mai json ko accespt kar raha hu limit upto 16kb only,
+App.use(express.json()) //means mai json ko accespt kar raha hu limit upto 16kb only,
                                         //multer allow file uploading facility
 
 
@@ -37,8 +37,7 @@ App.use(express.json({limit:"16kb"})) //means mai json ko accespt kar raha hu li
 //aapko express ko batana padega encoding
 //extended mean aap object ke andar bhi object de sakte ho
 App.use(express.urlencoded({
-    extended:true,
-    limit:"16kb"
+    extended:true
 }))
 
 
